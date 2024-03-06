@@ -18,7 +18,7 @@ class CameraAPI:
         })
         url = f'http://{self.api_host}/api/videoStream/getVideoStreamUrl?' + params
         res = requests.post(url)
-        return res.json  # code：返回状态码, msg：返回信息, data：流地址, cmd：接口地址
+        return res.json()  # code：返回状态码, msg：返回信息, data：流地址, cmd：接口地址
 
 
 if __name__ == '__main__':
