@@ -3,7 +3,7 @@
 import cv2
 import numpy as np
 from utils.get_stream import CameraAPI
-from utils.stream_loader import LoadStreams
+from utils.stream_io import push_rtsp_stream
 
 
 if __name__ == "__main__":
@@ -35,22 +35,10 @@ if __name__ == "__main__":
         while True:
             res = api.get_stream_url(id)
             if res['code'] == 200:
-                source.append(res['data'])
+                s = res['data']
+                source.append(s)
+                push_rtsp_stream(s, i)
                 break
     print(source)
-
-    show_w, show_h = 1920, 1080
-    n = len(source)
-    scale = int(np.ceil(np.sqrt(n)))
-    grid_w = int(show_w / scale)
-    grid_h = int(show_h / scale)
-
-    im_show = np.zeros((show_h, show_w, 3), dtype=np.uint8)
-    dataset = LoadStreams(source, grid_w, grid_h, vid_stride=1)
-
-    for im0s in dataset:
-        for i, im0 in enumerate(im0s):  # 拼接
-            im_show[grid_h*(i//scale):grid_h*(1+(i//scale)), grid_w*(i%scale):grid_w*(1+(i%scale))] = im0
-        cv2.imshow("im_show", im_show)
-        if cv2.waitKey(1) == ord("q"):
-            break
+    while True:
+        pass

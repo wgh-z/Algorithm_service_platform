@@ -15,9 +15,10 @@ __pycache__
 # ! /weights/yolov5s.pt
 /datasets
 /dependence
+/steammedia/assets
+! /steammedia/assets/视频编号.txt
 *.mp4
 *.zip
 *.xlsx
 *.jpg
 *.avi
-*.docx
