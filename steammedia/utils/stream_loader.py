@@ -17,9 +17,7 @@ class LoadStreams:
         # sources = Path(sources).read_text().rsplit() if os.path.isfile(sources) else [sources]
         n = len(sources)
 
-        void_img = np.zeros((720, 1280, 3), dtype=np.uint8)
-        void_img = cv2.putText(void_img, 'no signal', (500, 360), cv2.FONT_HERSHEY_SIMPLEX, 2, (255, 255, 255), 2)
-        self.void_img = cv2.resize(void_img, (self.grid_w, self.grid_h))
+        self.void_img = self.create_void_img(self.grid_w, self.grid_h)
 
         self.imgs, self.fps, self.frames, self.threads = [None] * n, [0] * n, [0] * n, [None] * n
         for i, s in enumerate(sources):
@@ -39,6 +37,12 @@ class LoadStreams:
             self.threads[i] = Thread(target=self.update, args=([i, cap, s]), daemon=True)
             print(f"{st}打开成功(帧长度{self.frames[i]}，帧尺寸{w}x{h}，{self.fps[i]:.2f} FPS)")
             self.threads[i].start()
+
+    def create_void_img(self, w, h):
+        void_img = np.zeros((720, 1280, 3), dtype=np.uint8)
+        void_img = cv2.putText(void_img, 'no signal', (500, 360), cv2.FONT_HERSHEY_SIMPLEX, 2, (255, 255, 255), 2)
+        void_img = cv2.resize(void_img, (w, h))
+        return void_img
 
     def update(self, i, cap, stream):
         n, f = 0, self.frames[i]

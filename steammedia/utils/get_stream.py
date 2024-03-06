@@ -23,7 +23,7 @@ class CameraAPI:
 
 if __name__ == '__main__':
     api_host = '10.200.152.52:8182'
-    camera_id = '10001'
+    camera_id = '44030566401310403472'
 
     api = CameraAPI(api_host)
     res = api.get_stream_url(camera_id)
